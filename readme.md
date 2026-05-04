@@ -12,7 +12,7 @@ VirtualBox (Gratuit) : Télécharger ici
 
 OU VMware (Workstation ou Fusion) : Si vous utilisez VMware, installez le plugin utilitaire :
 
-Bash
+
 vagrant plugin install vagrant-vmware-desktop
 Git : Pour cloner le dépôt.
 
@@ -21,30 +21,33 @@ Grâce à Vagrant, la création de la VM Linux, l'installation de Docker et de C
 
 Récupérer le projet :
 
-Bash
+
 git clone https://github.com/xavierarce/Conteneurisation.git
 Lancer la Machine Virtuelle :
 
 Avec VirtualBox (par défaut) :
 
-Bash
+
 vagrant up
 Avec VMware :
 
-Bash
+
 vagrant up --provider=vmware_desktop
 Accéder à l'environnement :
 Une fois la VM démarrée, connectez-vous en SSH :
 
-Bash
+
 vagrant ssh
 Note : Le dossier du projet sur votre PC est synchronisé avec le dossier /home/vagrant/projet dans la VM.
 
 Initialiser les conteneurs (dans la VM) :
 
-Bash
+
 cd projet
+sed -i 's/\r$//' setup.sh
+sed -i 's/\r$//' deploy_sdn.sh
 bash setup.sh
+
 💻 Flux de Travail (Où coder ?)
 L'avantage de cette configuration est que vous profitez de la puissance de la VM tout en gardant votre confort de développement :
 
@@ -52,7 +55,6 @@ L'avantage de cette configuration est que vous profitez de la puissance de la VM
 
 Exécution : Les scripts doivent être lancés via Docker à l'intérieur de la VM Vagrant.
 
-Bash
 # Exemple pour lancer un script
 docker exec python_ml_dev python3 main.py
 Emplacements spécifiques :
@@ -66,7 +68,7 @@ Pour prouver que l'environnement respecte les exigences pédagogiques :
 1. Bibliothèques ML/DL & Calcul
 Vérifiez la présence des frameworks (Scikit-learn, TensorFlow, PyTorch) :
 
-Bash
+
 docker exec python_ml_dev pip list | grep -E "scikit-learn|tensorflow|torch|numpy|pandas"
 2. Outils de Qualité & Sécurité
 Nous avons intégré une suite complète d'analyse statique :
@@ -80,7 +82,7 @@ Complexité : docker exec python_ml_dev radon --version
 3. Simulation Réseau SDN
 La topologie réseau est gérée par ContainerLab. Pour déployer le réseau simulé (depuis la VM) :
 
-Bash
+
 sudo clab deploy -t sdn_topology.yml
 🛑 Arrêt de l'environnement
 Pour économiser les ressources de votre PC quand vous avez fini de travailler :
