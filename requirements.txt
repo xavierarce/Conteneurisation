@@ -1,0 +1,19 @@
+# Bibliothèques ML/DL
+scikit-learn
+tensorflow
+torch
+torchvision
+orange3
+
+# Outils de calcul
+numpy
+scipy
+pandas
+
+# Qualité de code et Sécurité
+pylint
+flake8
+bandit
+radon
+xenon
+yapf
