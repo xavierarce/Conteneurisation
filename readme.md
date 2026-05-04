@@ -1,62 +1,97 @@
 🚀 Projet : Environnement de Développement ML/DL & SDN
-Bienvenue dans l'environnement de travail de notre équipe. Ce projet fournit un environnement standardisé pour le développement Python orienté Machine Learning et la simulation réseau SDN.  
+Bienvenue dans l'environnement de travail de notre équipe. Ce projet fournit un environnement Infrastructure as Code (IaC) standardisé pour le développement Python orienté Machine Learning et la simulation réseau SDN via ContainerLab.
 
-📋 Prérequis
-Docker Desktop (lancé et fonctionnel).
+📋 Prérequis (Machine Hôte)
+Avant de commencer, assurez-vous d'avoir installé les outils suivants sur votre ordinateur :
 
-Git (pour le partage du code).  
+Vagrant : Télécharger ici
 
-🛠️ Lancement rapide
+Un Hyperviseur :
+
+VirtualBox (Gratuit) : Télécharger ici
+
+OU VMware (Workstation ou Fusion) : Si vous utilisez VMware, installez le plugin utilitaire :
+
+Bash
+vagrant plugin install vagrant-vmware-desktop
+Git : Pour cloner le dépôt.
+
+🛠️ Lancement Rapide (Déploiement Automatisé)
+Grâce à Vagrant, la création de la VM Linux, l'installation de Docker et de ContainerLab sont automatisées.
+
 Récupérer le projet :
 
 Bash
 git clone https://github.com/xavierarce/Conteneurisation.git
-cd devepment_equipes
-Lancer l'environnement :
+Lancer la Machine Virtuelle :
+
+Avec VirtualBox (par défaut) :
 
 Bash
+vagrant up
+Avec VMware :
+
+Bash
+vagrant up --provider=vmware_desktop
+Accéder à l'environnement :
+Une fois la VM démarrée, connectez-vous en SSH :
+
+Bash
+vagrant ssh
+Note : Le dossier du projet sur votre PC est synchronisé avec le dossier /home/vagrant/projet dans la VM.
+
+Initialiser les conteneurs (dans la VM) :
+
+Bash
+cd projet
 bash setup.sh
-Le conteneur python_ml_dev tourne maintenant en arrière-plan.
-
-  
-
 💻 Flux de Travail (Où coder ?)
-Vous codez sur votre machine locale, pas "dans" le Docker.
+L'avantage de cette configuration est que vous profitez de la puissance de la VM tout en gardant votre confort de développement :
 
-Édition : Ouvrez le dossier devepment_equipes avec VS Code ou PyCharm.
+Édition : Ouvrez le dossier devepment_equipes sur votre machine physique avec votre IDE préféré (VS Code, PyCharm). Les modifications sont instantanément répercutées dans la VM.
 
+Exécution : Les scripts doivent être lancés via Docker à l'intérieur de la VM Vagrant.
+
+Bash
+# Exemple pour lancer un script
+docker exec python_ml_dev python3 main.py
 Emplacements spécifiques :
-
-Algorithmique : Placez vos fichiers de fonctions du TP "Algorithmique Avancée" dans le dossier /libs_algo.  
+Algorithmique : Placez vos bibliothèques du TP "Algorithmique Avancée" dans /libs_algo.
 
 Machine Learning : Créez vos scripts à la racine du projet.
 
-Exécution : Pour lancer un script (ex: main.py), utilisez la commande :
-
-Bash
-docker exec python_ml_dev python3 main.py
 🧪 Vérification de la Conformité (Syllabus)
-Pour prouver que l'environnement respecte les exigences de Thierry Thaureaux :  
+Pour prouver que l'environnement respecte les exigences pédagogiques :
 
-1. Bibliothèques ML/DL
-Vérifiez la présence de Scikit-learn, TensorFlow, PyTorch et Orange3 :
+1. Bibliothèques ML/DL & Calcul
+Vérifiez la présence des frameworks (Scikit-learn, TensorFlow, PyTorch) :
 
 Bash
-docker exec python_ml_dev pip list | grep -E "scikit-learn|tensorflow|torch|Orange3"
+docker exec python_ml_dev pip list | grep -E "scikit-learn|tensorflow|torch|numpy|pandas"
 2. Outils de Qualité & Sécurité
-Nous avons choisi une suite d'outils légers et complets (Analyse statique, sécurité, complexité) :
+Nous avons intégré une suite complète d'analyse statique :
 
-Qualité : docker exec python_ml_dev pylint --version
-
-  
+Qualité (Linting) : docker exec python_ml_dev pylint --version
 
 Sécurité : docker exec python_ml_dev bandit --version
 
-  
-
 Complexité : docker exec python_ml_dev radon --version
 
-  
+3. Simulation Réseau SDN
+La topologie réseau est gérée par ContainerLab. Pour déployer le réseau simulé (depuis la VM) :
 
-3. Simulation SDN
-La topologie réseau est définie dans topology.yml pour être utilisée avec ContainerLab.
+Bash
+sudo clab deploy -t sdn_topology.yml
+🛑 Arrêt de l'environnement
+Pour économiser les ressources de votre PC quand vous avez fini de travailler :
+
+Mettre la VM en pause : vagrant suspend
+
+Éteindre la VM : vagrant halt
+
+Supprimer la VM (supprime l'instance mais garde votre code) : vagrant destroy
+
+Pourquoi ce choix technique ? (Justification)
+Vagrant : Assure que chaque membre de l'équipe et le correcteur disposent de la même version d'OS (Ubuntu 22.04) et des mêmes versions d'outils, éliminant les problèmes de compatibilité Windows/Mac/Linux.
+
+Multi-Provider : Le projet est flexible et supporte aussi bien VMware (souvent utilisé en entreprise) que VirtualBox (standard académique).
