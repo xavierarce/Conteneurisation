@@ -17,6 +17,3 @@ bandit
 radon
 xenon
 yapf
-
-# Lien avec SonarQube
-sonar-scanner
