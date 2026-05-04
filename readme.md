@@ -1,68 +1,62 @@
 🚀 Projet : Environnement de Développement ML/DL & SDN
-Bienvenue dans l'environnement de travail de notre équipe. Ce projet a pour but de fournir un environnement standardisé pour le développement Python orienté Machine Learning, incluant nos outils de qualité de code et de simulation réseau.
+Bienvenue dans l'environnement de travail de notre équipe. Ce projet fournit un environnement standardisé pour le développement Python orienté Machine Learning et la simulation réseau SDN.  
 
 📋 Prérequis
-Avant de commencer, assurez-vous d'avoir installé sur votre poste :
+Docker Desktop (lancé et fonctionnel).
 
-Docker & Docker Compose
+Git (pour le partage du code).  
 
-Git
-
-Une distribution Linux (ou Docker Desktop sur Windows/Mac)
-
-🛠️ Comment lancer l'environnement ?
-Pour vous simplifier la vie, un script de déploiement automatique a été créé.
-
+🛠️ Lancement rapide
 Récupérer le projet :
 
 Bash
 git clone https://github.com/xavierarce/Conteneurisation.git
 cd devepment_equipes
-Lancer le déploiement :
+Lancer l'environnement :
 
 Bash
 bash setup.sh
-Ce script va construire l'image Docker et démarrer le conteneur en arrière-plan.
+Le conteneur python_ml_dev tourne maintenant en arrière-plan.
 
+  
 
-Entrer dans l'environnement de travail :
+💻 Flux de Travail (Où coder ?)
+Vous codez sur votre machine locale, pas "dans" le Docker.
+
+Édition : Ouvrez le dossier devepment_equipes avec VS Code ou PyCharm.
+
+Emplacements spécifiques :
+
+Algorithmique : Placez vos fichiers de fonctions du TP "Algorithmique Avancée" dans le dossier /libs_algo.  
+
+Machine Learning : Créez vos scripts à la racine du projet.
+
+Exécution : Pour lancer un script (ex: main.py), utilisez la commande :
 
 Bash
-docker exec -it python_ml_dev bash
-💻 Où écrire votre code ?
-Le dossier actuel sur votre machine est synchronisé avec le dossier /app à l'intérieur du conteneur.
+docker exec python_ml_dev python3 main.py
+🧪 Vérification de la Conformité (Syllabus)
+Pour prouver que l'environnement respecte les exigences de Thierry Thaureaux :  
 
-Vos scripts Python : Écrivez-les directement à la racine du projet sur votre PC (VS Code, PyCharm, etc.). Ils apparaîtront instantanément dans le conteneur.
+1. Bibliothèques ML/DL
+Vérifiez la présence de Scikit-learn, TensorFlow, PyTorch et Orange3 :
 
-Bibliothèques d'Algorithmique : Veuillez placer les fonctions créées lors du TP "Algorithmique Avancée" dans le dossier /libs_algo.
-
-🧪 Comment tester si tout fonctionne ?
-Une fois à l'intérieur du conteneur (via docker exec), lancez ces commandes pour vérifier la conformité au syllabus :
-
-1. Vérifier les bibliothèques ML/DL
 Bash
-python3 -c "import sklearn, tensorflow, torch; print('✅ Bibliothèques ML/DL prêtes !')"
-2. Vérifier les outils de qualité de code
-Le syllabus impose des outils d'analyse statique et de sécurité. Testez-les ainsi :
+docker exec python_ml_dev pip list | grep -E "scikit-learn|tensorflow|torch|Orange3"
+2. Outils de Qualité & Sécurité
+Nous avons choisi une suite d'outils légers et complets (Analyse statique, sécurité, complexité) :
 
-Pylint (Qualité) : pylint --version
+Qualité : docker exec python_ml_dev pylint --version
 
-Bandit (Sécurité) : bandit --version
+  
 
-Flake8 (Style) : flake8 --version
+Sécurité : docker exec python_ml_dev bandit --version
 
-3. Tester le réseau SDN (ContainerLab)
-Pour la partie réseau, assurez-vous que les commandes clab sont accessibles pour déployer la topologie définie dans topology.yml.
+  
 
-📂 Structure du Projet
-Dockerfile : Configuration de l'image (Python, outils).
+Complexité : docker exec python_ml_dev radon --version
 
-docker-compose.yml : Orchestration du conteneur et des volumes.
+  
 
-requirements.txt : Liste des bibliothèques à installer.
-
-setup.sh : Script de déploiement sur les postes.
-
-topology.yml : Configuration du réseau SDN ContainerLab.
-
-Note pour l'équipe : N'oubliez pas de faire un git pull régulièrement pour avoir les dernières configurations de l'environnement !
+3. Simulation SDN
+La topologie réseau est définie dans topology.yml pour être utilisée avec ContainerLab.
