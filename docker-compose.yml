@@ -1,11 +1,29 @@
 version: "3.8"
 
 services:
+  # Ton environnement de dev actuel
   dev-env:
     build: .
     image: projet-ml-env:latest
     container_name: python_ml_dev
     volumes:
       - .:/app
-    stdin_open: true # Equivalent de -i
-    tty: true # Equivalent de -t
+    stdin_open: true
+    tty: true
+    depends_on:
+      - sonarqube
+
+  # Serveur SonarQube pour l'analyse de qualité
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube_server
+    ports:
+      - "9000:9000"
+    networks:
+      - sonarnet
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+
+networks:
+  sonarnet:
+    driver: bridge
