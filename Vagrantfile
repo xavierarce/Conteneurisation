@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/jammy64"
-  config.vm.network "private_network", ip: "192.168.56.10"
+  config.vm.box = "bento/ubuntu-22.04"
+  config.vm.network "private_network", ip: "192.168.50.10"
   config.vm.synced_folder ".", "/home/vagrant/projet"
   config.vm.provision "shell", path: "provision.sh"
 
