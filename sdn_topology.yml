@@ -1,0 +1,27 @@
+name: sdn_ml_cluster
+
+topology:
+  nodes:
+    # Nœud 1 : Le routeur central (basé sur une image Linux légère)
+    router1:
+      kind: linux
+      image: alpine:latest
+
+    # Nœud 2 : Poste de Data Science A (utilisant VOTRE image)
+    data-node-a:
+      kind: linux
+      image: projet-ml-env:latest
+      env:
+        ROLE: "Worker A"
+
+    # Nœud 3 : Poste de Data Science B (utilisant VOTRE image)
+    data-node-b:
+      kind: linux
+      image: projet-ml-env:latest
+      env:
+        ROLE: "Worker B"
+
+  # Définition des câbles réseaux (liens)
+  links:
+    - endpoints: ["router1:eth1", "data-node-a:eth1"]
+    - endpoints: ["router1:eth2", "data-node-b:eth1"]
