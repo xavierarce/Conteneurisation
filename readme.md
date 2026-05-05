@@ -58,6 +58,26 @@ sed -i 's/\r$//' deploy_sdn.sh
 bash setup.sh
 ```
 
+## 📦 Rôle des fichiers du projet
+Voici un aperçu rapide de ce que fait chaque fichier principal du dépôt :
+
+| Fichier | Rôle |
+| --- | --- |
+| `Dockerfile` | Construit l'image Docker de l'environnement ML et installe les dépendances Python. |
+| `docker-compose.yml` | Définit le service Docker de développement et monte le projet dans le conteneur. |
+| `setup.sh` | Lance l'environnement en construisant l'image puis en démarrant les conteneurs. |
+| `deploy_sdn.sh` | Déploie la topologie SDN avec ContainerLab. |
+| `provision.sh` | Installe Docker, ContainerLab et les outils de base dans la VM Vagrant. |
+| `Vagrantfile` | Configure la VM Ubuntu, le partage de dossier et la provision. |
+| `requirements.txt` | Liste les bibliothèques Python pour le ML, la qualité et la sécurité. |
+| `sdn_topology.yml` | Décrit la topologie réseau utilisée pour la simulation SDN. |
+| `main.py` | Point d’entrée principal du projet Python. |
+| `linear_api.py` | Gère la logique liée au modèle ou à l’API linéaire. |
+| `matrix_api.py` | Gère la logique liée au traitement matriciel ou à l’API matricielle. |
+| `tree_api.py` | Gère la logique liée au traitement par arbre ou à l’API arborescente. |
+| `test_ml.py` | Vérifie rapidement l’installation des bibliothèques ML et de NumPy. |
+| `files_descriptions.txt` | Centralise des descriptions courtes pour chaque fichier du projet. |
+
 ## 💻 Flux de Travail (Où coder ?)
 L'avantage de cette configuration est que vous profitez de la puissance de la VM tout en gardant votre confort de développement :
 
