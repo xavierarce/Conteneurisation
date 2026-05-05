@@ -1,0 +1,30 @@
+# =========================
+# Environnement Local Vagrant
+# =========================
+.vagrant/
+
+# =========================
+# Fichiers générés par ContainerLab
+# =========================
+clab-sdn_ml_cluster/
+
+# =========================
+# Notes et fichiers locaux
+# =========================
+Windows PowerShell installation de la vm.txt
+
+# =========================
+# Python & Machine Learning
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# =========================
+# Système d'exploitation
+# =========================
+.DS_Store
+Thumbs.db
