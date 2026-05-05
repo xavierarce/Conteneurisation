@@ -11,10 +11,10 @@ fi
 
 # 2. Construction de l'image Docker[cite: 1]
 echo "Construction de l'image Docker en cours..."
-docker-compose build
+docker compose build
 
 # 3. Lancement de l'environnement
 echo "Lancement du conteneur..."
-docker-compose up -d
+docker compose up -d
 
 echo "L'environnement est prêt ! Utilisez 'docker exec -it python_ml_dev bash' pour entrer."
